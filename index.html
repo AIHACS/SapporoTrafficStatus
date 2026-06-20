@@ -3,85 +3,107 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AIテーマパーク診断</title>
+    <title>札幌イベント交通アラート 2026</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <main class="app-shell">
-      <section class="hero" aria-labelledby="app-title">
-        <div class="hero-copy">
-          <p class="ticket-label">AI Spark Park</p>
-          <h1 id="app-title">あなた向けAI活用法10選</h1>
-          <p class="lead">
-            8問だけ答えると、未経験からでも試しやすいAI活用法と、そのまま使えるプロンプトを案内します。
-          </p>
-          <div class="hero-actions">
-            <a class="primary-link" href="#diagnosis">診断をはじめる</a>
-            <button class="ghost-button" type="button" id="sampleResultButton">サンプルを見る</button>
-          </div>
-        </div>
+    <header class="app-header">
+      <div class="header-copy">
+        <p class="eyebrow">Sapporo Event Traffic Watch</p>
+        <h1>札幌イベント交通アラート 2026</h1>
+        <p class="lead">イベント由来の地下鉄・JR・道路の混雑時間を、札幌市民向けにまとめて確認できます。</p>
+      </div>
+      <div class="header-panel" aria-label="データ概要">
+        <span class="panel-kicker">CSVベース</span>
+        <strong id="eventCount">7件</strong>
+        <span>交通規制イベント</span>
+      </div>
+    </header>
 
-        <div class="park-visual" aria-label="AIテーマパークの案内図">
-          <div class="sun"></div>
-          <div class="wheel">
-            <span></span><span></span><span></span><span></span>
-          </div>
-          <div class="castle">
-            <span></span><span></span><span></span>
-          </div>
-          <div class="path"></div>
-          <div class="booth booth-art">🎨</div>
-          <div class="booth booth-music">🎵</div>
-          <div class="booth booth-career">💼</div>
-          <div class="booth booth-life">🍳</div>
-          <div class="gate">AI PARK</div>
-        </div>
+    <main class="layout">
+      <section class="toolbar" aria-label="絞り込み">
+        <label class="search-box">
+          <span>検索</span>
+          <input id="searchInput" type="search" placeholder="イベント名・駅名・エリア">
+        </label>
+        <label>
+          <span>月</span>
+          <select id="monthFilter">
+            <option value="all">すべて</option>
+            <option value="2">2月</option>
+            <option value="6">6月</option>
+            <option value="7">7月</option>
+            <option value="8">8月</option>
+            <option value="9">9月</option>
+            <option value="10">10月</option>
+          </select>
+        </label>
+        <label>
+          <span>交通</span>
+          <select id="modeFilter">
+            <option value="all">すべて</option>
+            <option value="subway">地下鉄</option>
+            <option value="jr">JR</option>
+            <option value="road">道路</option>
+          </select>
+        </label>
+        <label>
+          <span>規制レベル</span>
+          <select id="severityFilter">
+            <option value="all">すべて</option>
+            <option value="超大規模">超大規模</option>
+            <option value="大規模">大規模</option>
+            <option value="中〜大規模">中〜大規模</option>
+            <option value="中規模">中規模</option>
+          </select>
+        </label>
       </section>
 
-      <section class="progress-panel" aria-label="診断の進行状況">
-        <div class="progress-text">
-          <span id="progressCount">0</span> / 8 questions
-        </div>
-        <div class="progress-track">
-          <div class="progress-bar" id="progressBar"></div>
-        </div>
+      <section class="metrics" aria-label="サマリー">
+        <article>
+          <span class="metric-label">高注意イベント</span>
+          <strong id="highImpactCount">0</strong>
+          <span>大規模以上</span>
+        </article>
+        <article>
+          <span class="metric-label">最頻出エリア</span>
+          <strong id="topArea">大通</strong>
+          <span>駅・道路影響</span>
+        </article>
+        <article>
+          <span class="metric-label">対象交通</span>
+          <strong>3系統</strong>
+          <span>地下鉄 / JR / 道路</span>
+        </article>
       </section>
 
-      <form class="diagnosis" id="diagnosis" aria-labelledby="diagnosis-title">
+      <div class="content-grid">
+        <section class="event-list-panel" aria-label="イベント一覧">
+          <div class="section-heading">
+            <h2>イベント一覧</h2>
+            <p id="resultCount">7件表示中</p>
+          </div>
+          <div id="eventList" class="event-list"></div>
+        </section>
+
+        <section class="detail-panel" aria-label="イベント詳細">
+          <div id="eventDetail"></div>
+        </section>
+      </div>
+
+      <section class="station-board" aria-label="駅別ラッシュ早見表">
         <div class="section-heading">
-          <p class="eyebrow">Entrance Check</p>
-          <h2 id="diagnosis-title">8問チケット</h2>
+          <h2>駅別ラッシュ早見表</h2>
+          <p>イベントごとの「気をつけたい駅」と時間帯</p>
         </div>
-        <div class="question-list" id="questionList"></div>
-        <div class="form-actions">
-          <button class="primary-button" type="submit">おすすめ10選を出す</button>
-          <button class="secondary-button" type="button" id="resetButton">リセット</button>
-        </div>
-      </form>
-
-      <section class="results" id="results" aria-live="polite" hidden>
-        <div class="result-header">
-          <div>
-            <p class="eyebrow">Your Route</p>
-            <h2 id="resultTitle">あなたのAIテーマパーク案内</h2>
-          </div>
-          <button class="secondary-button" type="button" id="copyAllButton">全部コピー</button>
-        </div>
-
-        <div class="route-summary">
-          <div class="route-badge" id="routeBadge">🎡</div>
-          <div>
-            <p class="route-kicker">おすすめエリア</p>
-            <h3 id="routeName">AIスタートエリア</h3>
-            <p id="routeDescription">まずは小さく試して、できた実感を作るルートです。</p>
-          </div>
-        </div>
-
-        <div class="usecase-grid" id="usecaseGrid"></div>
+        <div id="stationBoard" class="station-grid"></div>
       </section>
     </main>
 
-    <div class="toast" id="toast" role="status" aria-live="polite">コピーしました</div>
-    <script src="script.js"></script>
+    <footer class="footer-note">
+      <p>このページの混雑予測は、提供CSVと札幌市内の主要交通結節点に基づく初期ルールです。公式な運行情報・交通規制図は各イベント公式サイトや交通機関の発表を確認してください。</p>
+    </footer>
+
+    <script src="app.js"></script>
   </body>
 </html>
