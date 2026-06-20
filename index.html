@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AIテーマパーク診断</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero" aria-labelledby="app-title">
+        <div class="hero-copy">
+          <p class="ticket-label">AI Spark Park</p>
+          <h1 id="app-title">あなた向けAI活用法10選</h1>
+          <p class="lead">
+            8問だけ答えると、未経験からでも試しやすいAI活用法と、そのまま使えるプロンプトを案内します。
+          </p>
+          <div class="hero-actions">
+            <a class="primary-link" href="#diagnosis">診断をはじめる</a>
+            <button class="ghost-button" type="button" id="sampleResultButton">サンプルを見る</button>
+          </div>
+        </div>
+
+        <div class="park-visual" aria-label="AIテーマパークの案内図">
+          <div class="sun"></div>
+          <div class="wheel">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <div class="castle">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="path"></div>
+          <div class="booth booth-art">🎨</div>
+          <div class="booth booth-music">🎵</div>
+          <div class="booth booth-career">💼</div>
+          <div class="booth booth-life">🍳</div>
+          <div class="gate">AI PARK</div>
+        </div>
+      </section>
+
+      <section class="progress-panel" aria-label="診断の進行状況">
+        <div class="progress-text">
+          <span id="progressCount">0</span> / 8 questions
+        </div>
+        <div class="progress-track">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </section>
+
+      <form class="diagnosis" id="diagnosis" aria-labelledby="diagnosis-title">
+        <div class="section-heading">
+          <p class="eyebrow">Entrance Check</p>
+          <h2 id="diagnosis-title">8問チケット</h2>
+        </div>
+        <div class="question-list" id="questionList"></div>
+        <div class="form-actions">
+          <button class="primary-button" type="submit">おすすめ10選を出す</button>
+          <button class="secondary-button" type="button" id="resetButton">リセット</button>
+        </div>
+      </form>
+
+      <section class="results" id="results" aria-live="polite" hidden>
+        <div class="result-header">
+          <div>
+            <p class="eyebrow">Your Route</p>
+            <h2 id="resultTitle">あなたのAIテーマパーク案内</h2>
+          </div>
+          <button class="secondary-button" type="button" id="copyAllButton">全部コピー</button>
+        </div>
+
+        <div class="route-summary">
+          <div class="route-badge" id="routeBadge">🎡</div>
+          <div>
+            <p class="route-kicker">おすすめエリア</p>
+            <h3 id="routeName">AIスタートエリア</h3>
+            <p id="routeDescription">まずは小さく試して、できた実感を作るルートです。</p>
+          </div>
+        </div>
+
+        <div class="usecase-grid" id="usecaseGrid"></div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">コピーしました</div>
+    <script src="script.js"></script>
+  </body>
+</html>
